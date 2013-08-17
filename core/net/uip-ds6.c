@@ -46,7 +46,10 @@
 #include "lib/random.h"
 #include "net/uip-nd6.h"
 #include "net/uip-ds6.h"
+
+#if UIP_CONF_IPV6_QUEUE_PKT
 #include "net/uip-packetqueue.h"
+#endif
 
 #if UIP_CONF_IPV6
 
