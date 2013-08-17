@@ -196,6 +196,14 @@ uip_ds6_periodic(void)
   return;
 }
 
+/*
+ * Pico]OS: Turn of -Wcast-align temporarily,
+ *          next function has cast that produces
+ *          warnings although it works.
+ */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-align"
+
 /*---------------------------------------------------------------------------*/
 uint8_t
 uip_ds6_list_loop(uip_ds6_element_t *list, uint8_t size,
@@ -222,6 +230,11 @@ uip_ds6_list_loop(uip_ds6_element_t *list, uint8_t size,
 
   return *out_element != NULL ? FREESPACE : NOSPACE;
 }
+
+/*
+ * Pico]OS: Restore -Wcast-align.
+ */
+#pragma GCC diagnostic pop
 
 /*---------------------------------------------------------------------------*/
 #if UIP_CONF_ROUTER
