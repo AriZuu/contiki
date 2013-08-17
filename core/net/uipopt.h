@@ -585,6 +585,17 @@ void uip_log(char *msg);
 #define UIP_LLH_LEN     14
 #endif /* UIP_CONF_LLH_LEN */
 
+/*
+ * Pico]OS: Check alignment and calculate
+ * necessary link-layer header padding
+ * to achive 32-bit alignment for ip headers.
+ */
+#if (UIP_LLH_LEN) % 2 != 0
+#error alignment failure
+#endif
+
+#define UIP_LLH_PAD (UIP_LLH_LEN % 4)
+
 /** @} */
 /*------------------------------------------------------------------------------*/
 /**
