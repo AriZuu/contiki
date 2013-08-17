@@ -60,6 +60,8 @@
 
 #include "net/uip_arp.h"
 
+#if !UIP_CONF_IPV6
+
 #include <string.h>
 
 struct arp_hdr {
@@ -440,6 +442,8 @@ uip_arp_out(void)
   uip_len += sizeof(struct uip_eth_hdr);
 }
 /*-----------------------------------------------------------------------------------*/
+
+#endif
 
 /** @} */
 /** @} */
