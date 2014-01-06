@@ -36,19 +36,31 @@
 
 #include <stdlib.h>
 
+#if !defined(__MSP430__)
+static unsigned int seedValue;
+#endif
+
 /*---------------------------------------------------------------------------*/
 void
 random_init(unsigned short seed)
 {
+#if defined(__MSP430__)
   srand(seed);
+#else
+  seedValue = seed;
+#endif
 }
 /*---------------------------------------------------------------------------*/
 unsigned short
 random_rand(void)
 {
+#if defined(__MSP430__)
 /* In gcc int rand() uses RAND_MAX and long random() uses RANDOM_MAX=0x7FFFFFFF */
 /* RAND_MAX varies depending on the architecture */
 
   return (unsigned short)rand();
+#else
+  return (unsigned short)rand_r(&seedValue);
+#endif
 }
 /*---------------------------------------------------------------------------*/
