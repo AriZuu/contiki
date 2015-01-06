@@ -538,7 +538,11 @@ uip_connect(const uip_ipaddr_t *ripaddr, uint16_t rport)
 }
 #endif /* UIP_TCP && UIP_ACTIVE_OPEN */
 /*---------------------------------------------------------------------------*/
-void
+
+/*
+ * Pico]OS: declare function as static to avoid warning.
+ */
+static void
 remove_ext_hdr(void)
 {
   /* Remove ext header before TCP/UDP processing. */
