@@ -686,6 +686,15 @@ uip_process(uint8_t flag)
     if((uip_connr->tcpstateflags & UIP_TS_MASK) == UIP_ESTABLISHED &&
        !uip_outstanding(uip_connr)) {
 	uip_flags = UIP_POLL;
+/*
+ * Pico]OS:  TCP polling code can send stale/duplicate data.
+ *           For discussion about problem, see
+ *           http://article.gmane.org/gmane.network.uip.user/1312
+ *
+ *           Reset uip_len and uip_slen as workaround.
+ */
+        uip_len = 0;
+        uip_slen = 0;
 	UIP_APPCALL();
 	goto appsend;
 #if UIP_ACTIVE_OPEN && UIP_TCP
