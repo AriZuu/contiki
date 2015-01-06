@@ -150,7 +150,7 @@ uip_arp_init(void)
 void
 uip_arp_timer(void)
 {
-  struct arp_entry *tabptr;
+  struct arp_entry *tabptr = (struct arp_entry*) 0;
   
   ++arptime;
   for(i = 0; i < UIP_ARPTAB_SIZE; ++i) {
@@ -165,7 +165,7 @@ uip_arp_timer(void)
 
 /*-----------------------------------------------------------------------------------*/
 static void
-uip_arp_update(uip_ipaddr_t *ipaddr, struct uip_eth_addr *ethaddr)
+uip_arp_update(uip_ipaddr_t *nipaddr, struct uip_eth_addr *ethaddr)
 {
   register struct arp_entry *tabptr = arp_table;
 
@@ -180,7 +180,7 @@ uip_arp_update(uip_ipaddr_t *ipaddr, struct uip_eth_addr *ethaddr)
 
       /* Check if the source IP address of the incoming packet matches
          the IP address in this ARP table entry. */
-      if(uip_ipaddr_cmp(ipaddr, &tabptr->ipaddr)) {
+      if(uip_ipaddr_cmp(nipaddr, &tabptr->ipaddr)) {
 	 
 	/* An old entry found, update this and return. */
 	memcpy(tabptr->ethaddr.addr, ethaddr->addr, 6);
@@ -221,7 +221,7 @@ uip_arp_update(uip_ipaddr_t *ipaddr, struct uip_eth_addr *ethaddr)
 
   /* Now, i is the ARP table entry which we will fill with the new
      information. */
-  uip_ipaddr_copy(&tabptr->ipaddr, ipaddr);
+  uip_ipaddr_copy(&tabptr->ipaddr, nipaddr);
   memcpy(tabptr->ethaddr.addr, ethaddr->addr, 6);
   tabptr->time = arptime;
 }
