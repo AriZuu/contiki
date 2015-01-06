@@ -54,7 +54,7 @@
 #ifndef LINKADDR_H_
 #define LINKADDR_H_
 
-#include "contiki-conf.h"
+#include "net/ip/uip.h"
 
 #ifdef LINKADDR_CONF_SIZE
 #define LINKADDR_SIZE LINKADDR_CONF_SIZE
