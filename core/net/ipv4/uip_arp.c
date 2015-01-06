@@ -109,8 +109,12 @@ static uint8_t i, c;
 static uint8_t arptime;
 static uint8_t tmpage;
 
-#define BUF   ((struct arp_hdr *)&uip_buf[0])
-#define IPBUF ((struct ethip_hdr *)&uip_buf[0])
+/*
+ * Pico]OS: Use uip_buf16 macro to ensure 16-bit alignment.
+ *          Allows compiling with gcc -Wcast-align.
+ */
+#define BUF   ((struct arp_hdr *)&uip_buf16(0))
+#define IPBUF ((struct ethip_hdr *)&uip_buf16(0))
 
 #define DEBUG 0
 #if DEBUG

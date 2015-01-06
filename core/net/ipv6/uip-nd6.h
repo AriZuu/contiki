@@ -286,7 +286,11 @@ typedef struct uip_nd6_redirect {
  */
 
 /** \brief ND option header */
-typedef struct uip_nd6_opt_hdr {
+
+/*
+ * Pico]OS: Force 32-bit alignment to avoid compiler warnings.
+ */
+typedef struct __attribute__((aligned(4))) uip_nd6_opt_hdr {
   uint8_t type;
   uint8_t len;
 } uip_nd6_opt_hdr;

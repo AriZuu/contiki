@@ -160,6 +160,16 @@
 #define UIP_LLH_LEN     0
 #endif /* UIP_CONF_LLH_LEN */
 
+/*
+ * Pico]OS: Check alignment and calculate
+ * necessary link-layer header padding
+ * to achive 32-bit alignment for ip headers.
+ */
+#if (UIP_LLH_LEN) % 2 != 0
+#error alignment failure
+#endif
+
+#define UIP_LLH_PAD (UIP_LLH_LEN % 4)
 /**
  * The size of the uIP packet buffer.
  *

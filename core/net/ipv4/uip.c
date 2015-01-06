@@ -207,10 +207,15 @@ static uint16_t tmp16;
 
 
 /* Macros. */
-#define BUF ((struct uip_tcpip_hdr *)&uip_buf[UIP_LLH_LEN])
+
+/*
+ * Pico]OS: Use uip_buf16 macro to ensure 16-bit alignment.
+ *          Allows compiling with gcc -Wcast-align.
+ */
+#define BUF ((struct uip_tcpip_hdr *)&uip_buf16(UIP_LLH_LEN))
 #define FBUF ((struct uip_tcpip_hdr *)&uip_reassbuf[0])
-#define ICMPBUF ((struct uip_icmpip_hdr *)&uip_buf[UIP_LLH_LEN])
-#define UDPBUF ((struct uip_udpip_hdr *)&uip_buf[UIP_LLH_LEN])
+#define ICMPBUF ((struct uip_icmpip_hdr *)&uip_buf16(UIP_LLH_LEN))
+#define UDPBUF ((struct uip_udpip_hdr *)&uip_buf16(UIP_LLH_LEN))
 
 
 #if UIP_STATISTICS == 1

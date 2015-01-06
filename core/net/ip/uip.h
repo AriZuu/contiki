@@ -515,16 +515,27 @@ void uip_reass_over(void);
  \endcode
 */
 
+/*
+ * Pico]OS: Add padding before link-level header to
+ *          adjust tcpip headers to 32-bit boundary.
+ *          Add u16 field to access data with 16-bit alignment.
+ */
 typedef union {
-  uint32_t u32[(UIP_BUFSIZE + 3) / 4];
-  uint8_t u8[UIP_BUFSIZE];
+  uint32_t u32[(UIP_LLH_PAD + UIP_BUFSIZE + 3) / 4];
+  uint16_t u16[(UIP_LLH_PAD + UIP_BUFSIZE + 1) / 2];
+  uint8_t u8[UIP_LLH_PAD + UIP_BUFSIZE];
 } uip_buf_t;
 
 CCIF extern uip_buf_t uip_aligned_buf;
+#define uip_buf (uip_aligned_buf.u8 + UIP_LLH_PAD)
 
-/** Macro to access uip_aligned_buf as an array of bytes */
-#define uip_buf (uip_aligned_buf.u8)
+/*
+ * Pico]OS: Macros for accessing uip_buf contens with
+ *          16-bit or 32-bit alignment.
+ */
 
+#define uip_buf32(i) (uip_aligned_buf.u32[(UIP_LLH_PAD + i) / 4])
+#define uip_buf16(i) (uip_aligned_buf.u16[(UIP_LLH_PAD + i) / 2])
 
 /** @} */
 

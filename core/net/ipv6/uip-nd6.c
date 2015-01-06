@@ -101,19 +101,23 @@ void uip_log(char *msg);
  *  value of these length variables
  */
 
-#define UIP_IP_BUF                ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])  /**< Pointer to IP header */
-#define UIP_ICMP_BUF            ((struct uip_icmp_hdr *)&uip_buf[uip_l2_l3_hdr_len])  /**< Pointer to ICMP header*/
+/*
+ * Pico]OS: Use uip_buf32 macro to ensure 32-bit alignment.
+ *          Allows compiling with gcc -Wcast-align.
+ */
+#define UIP_IP_BUF                ((struct uip_ip_hdr *)&uip_buf32(UIP_LLH_LEN))  /**< Pointer to IP header */
+#define UIP_ICMP_BUF            ((struct uip_icmp_hdr *)&uip_buf32(uip_l2_l3_hdr_len))  /**< Pointer to ICMP header*/
 /**@{  Pointers to messages just after icmp header */
-#define UIP_ND6_RS_BUF            ((uip_nd6_rs *)&uip_buf[uip_l2_l3_icmp_hdr_len])
-#define UIP_ND6_RA_BUF            ((uip_nd6_ra *)&uip_buf[uip_l2_l3_icmp_hdr_len])
-#define UIP_ND6_NS_BUF            ((uip_nd6_ns *)&uip_buf[uip_l2_l3_icmp_hdr_len])
-#define UIP_ND6_NA_BUF            ((uip_nd6_na *)&uip_buf[uip_l2_l3_icmp_hdr_len])
+#define UIP_ND6_RS_BUF            ((uip_nd6_rs *)&uip_buf32(uip_l2_l3_icmp_hdr_len))
+#define UIP_ND6_RA_BUF            ((uip_nd6_ra *)&uip_buf32(uip_l2_l3_icmp_hdr_len))
+#define UIP_ND6_NS_BUF            ((uip_nd6_ns *)&uip_buf32(uip_l2_l3_icmp_hdr_len))
+#define UIP_ND6_NA_BUF            ((uip_nd6_na *)&uip_buf32(uip_l2_l3_icmp_hdr_len))
 /** @} */
 /** Pointer to ND option */
-#define UIP_ND6_OPT_HDR_BUF  ((uip_nd6_opt_hdr *)&uip_buf[uip_l2_l3_icmp_hdr_len + nd6_opt_offset])
-#define UIP_ND6_OPT_PREFIX_BUF ((uip_nd6_opt_prefix_info *)&uip_buf[uip_l2_l3_icmp_hdr_len + nd6_opt_offset])
-#define UIP_ND6_OPT_MTU_BUF ((uip_nd6_opt_mtu *)&uip_buf[uip_l2_l3_icmp_hdr_len + nd6_opt_offset])
-#define UIP_ND6_OPT_RDNSS_BUF ((uip_nd6_opt_dns *)&uip_buf[uip_l2_l3_icmp_hdr_len + nd6_opt_offset])
+#define UIP_ND6_OPT_HDR_BUF  ((uip_nd6_opt_hdr *)&uip_buf32((uip_l2_l3_icmp_hdr_len + nd6_opt_offset)))
+#define UIP_ND6_OPT_PREFIX_BUF ((uip_nd6_opt_prefix_info *)&uip_buf32((uip_l2_l3_icmp_hdr_len + nd6_opt_offset)))
+#define UIP_ND6_OPT_MTU_BUF ((uip_nd6_opt_mtu *)&uip_buf32((uip_l2_l3_icmp_hdr_len + nd6_opt_offset)))
+#define UIP_ND6_OPT_RDNSS_BUF ((uip_nd6_opt_dns *)&uip_buf32((uip_l2_l3_icmp_hdr_len + nd6_opt_offset))
 /** @} */
 
 #if UIP_ND6_SEND_NA || UIP_ND6_SEND_RA || !UIP_CONF_ROUTER
