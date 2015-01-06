@@ -67,6 +67,11 @@
 #ifndef TCPIP_H_
 #define TCPIP_H_
 
+/*
+ * Pico]OS: We only need prototypes for tcpip_input & tcpip_output.
+ */
+#ifndef POS_VER_N // Most of this stuff is not needed for Pico]OS
+
 #include "contiki.h"
 
 struct uip_conn;
@@ -320,6 +325,8 @@ void tcpip_icmp6_call(uint8_t type);
  */
 CCIF extern process_event_t tcpip_event;
 
+#endif /* POS_VER_N */
+
 /**
  * \name TCP/IP packet processing
  * @{
@@ -342,10 +349,14 @@ CCIF void tcpip_input(void);
  */
 #if NETSTACK_CONF_WITH_IPV6
 uint8_t tcpip_output(const uip_lladdr_t *);
+#ifndef POS_VER_N
 void tcpip_set_outputfunc(uint8_t (* f)(const uip_lladdr_t *));
+#endif
 #else
 uint8_t tcpip_output(void);
+#ifndef POS_VER_N
 void tcpip_set_outputfunc(uint8_t (* f)(void));
+#endif
 #endif
 
 /**
@@ -354,6 +365,8 @@ void tcpip_set_outputfunc(uint8_t (* f)(void));
 #if NETSTACK_CONF_WITH_IPV6
 void tcpip_ipv6_output(void);
 #endif
+
+#ifndef POS_VER_N
 
 /**
  * \brief Is forwarding generally enabled?
@@ -372,6 +385,7 @@ extern unsigned char tcpip_is_forwarding;
 
 PROCESS_NAME(tcpip_process);
 
+#endif
 #endif /* TCPIP_H_ */
 
 /** @} */

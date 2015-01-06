@@ -38,9 +38,8 @@
  * \author  Julien Abeille <jabeille@cisco.com> (IPv6 related code)
  */
 
-#include "contiki-net.h"
-#include "net/ip/uip-split.h"
-#include "net/ip/uip-packetqueue.h"
+#include "net/ip/uip.h"
+#include "net/ip/uipopt.h"
 
 #if NETSTACK_CONF_WITH_IPV6
 #include "net/ipv6/uip-nd6.h"
@@ -63,6 +62,8 @@ void uip_log(char *msg);
 #define UIP_ICMP_BUF ((struct uip_icmp_hdr *)&uip_buf32(UIP_LLIPH_LEN + uip_ext_len))
 #define UIP_IP_BUF ((struct uip_ip_hdr *)&uip_buf32(UIP_LLH_LEN))
 #define UIP_TCP_BUF ((struct uip_tcpip_hdr *)&uip_buf32(UIP_LLH_LEN))
+
+#ifndef POS_VER_N
 
 #ifdef UIP_FALLBACK_INTERFACE
 extern struct uip_fallback_interface UIP_FALLBACK_INTERFACE;
@@ -534,6 +535,9 @@ tcpip_input(void)
   uip_ext_len = 0;
 #endif /*NETSTACK_CONF_WITH_IPV6*/
 }
+
+#endif /* POS_VER_N */
+
 /*---------------------------------------------------------------------------*/
 #if NETSTACK_CONF_WITH_IPV6
 void
@@ -730,6 +734,8 @@ tcpip_ipv6_output(void)
   uip_ext_len = 0;
 }
 #endif /* NETSTACK_CONF_WITH_IPV6 */
+
+#ifndef POS_VER_N
 /*---------------------------------------------------------------------------*/
 #if UIP_UDP
 void
@@ -829,4 +835,5 @@ PROCESS_THREAD(tcpip_process, ev, data)
   
   PROCESS_END();
 }
+#endif /* POS_VER_N */
 /*---------------------------------------------------------------------------*/
