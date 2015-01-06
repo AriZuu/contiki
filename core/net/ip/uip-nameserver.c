@@ -41,8 +41,7 @@
  *
  */
 
-#include "contiki.h"
-#include "contiki-net.h"
+#include "uip.h"
 
 #include "lib/list.h"
 #include "lib/memb.h"
