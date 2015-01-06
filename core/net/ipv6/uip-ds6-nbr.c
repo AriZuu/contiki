@@ -48,7 +48,6 @@
 #include <stddef.h>
 #include "lib/list.h"
 #include "net/linkaddr.h"
-#include "net/packetbuf.h"
 #include "net/ipv6/uip-ds6-nbr.h"
 
 #define DEBUG DEBUG_NONE
@@ -190,6 +189,11 @@ uip_ds6_nbr_lladdr_from_ipaddr(const uip_ipaddr_t *ipaddr)
   return nbr ? uip_ds6_nbr_get_ll(nbr) : NULL;
 }
 /*---------------------------------------------------------------------------*/
+
+/*
+ * Pico]OS: We dont need this.
+ */
+#ifndef POS_VER_N
 void
 uip_ds6_link_neighbor_callback(int status, int numtx)
 {
@@ -230,6 +234,7 @@ uip_ds6_link_neighbor_callback(int status, int numtx)
 #endif /* UIP_DS6_LL_NUD */
 
 }
+#endif
 /*---------------------------------------------------------------------------*/
 void
 uip_ds6_neighbor_periodic(void)
