@@ -1,19 +1,14 @@
-The Contiki Operating System
-============================
+uIP from Contiki Operating System for Pico]OS
+=============================================
 
-[![Build Status](https://travis-ci.org/contiki-os/contiki.svg?branch=release-3-0)](https://travis-ci.org/contiki-os/contiki/branches)
+This fork of Contiki Operating system is used to maintain
+a modified version of uIP that makes up a tcp/ip
+stack for Pico]OS operating system.
 
-Contiki is an open source operating system that runs on tiny low-power
-microcontrollers and makes it possible to develop applications that
-make efficient use of the hardware while providing standardized
-low-power wireless communication for a range of hardware platforms.
+For information about Pico]OS see:
 
-Contiki is used in numerous commercial and non-commercial systems,
-such as city sound monitoring, street lights, networked electrical
-power meters, industrial monitoring, radiation monitoring,
-construction site monitoring, alarm systems, remote house monitoring,
-and so on.
+[http://picoos.sf.net](http://picoos.sf.net)
 
-For more information, see the Contiki website:
+For information about Contiki see:
 
 [http://contiki-os.org](http://contiki-os.org)
