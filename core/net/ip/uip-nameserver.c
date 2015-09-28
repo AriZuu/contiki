@@ -42,6 +42,7 @@
  */
 
 #include "uip.h"
+#include "net/ip/uip-nameserver.h"
 
 #include "lib/list.h"
 #include "lib/memb.h"
